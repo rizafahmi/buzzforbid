@@ -70,7 +70,7 @@ class Hotel(models.Model):
     # Contact Info
     phone_number = models.CharField(max_length=50, blank=False, null=False)
     fax_number = models.CharField(max_length=50, blank=True, null=True)
-    cs_email = models.EmailField(max_length=75, blank=False, null=False, unique=True)
+    cs_email = models.EmailField(max_length=75, blank=True, null=True, unique=True)
     manager = models.ForeignKey(HotelManagerUser, related_name='manager_user', blank=True,
             null=True)
     supervisor = models.ForeignKey(HotelSupervisorUser, related_name='supervisor_user', blank=True,
