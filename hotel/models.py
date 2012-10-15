@@ -1,6 +1,22 @@
 from django.db import models
 from city.models import City
 from region.models import Region
+from province.models import Province
+from django.contrib.auth.models import User
+
+
+class Facility(models.Model):
+    # FACILITY_CHOICE = (
+    #         ('WiFi', 'WiFi'),
+    #         ('Parking', 'Parking'),
+    #         ('Airport Shuttle', 'Airport Shuttle'),
+    # )
+
+    facility = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        """docstring for __unicode__"""
+        return self.facility
 
 
 class Hotel(models.Model):
@@ -22,10 +38,20 @@ class Hotel(models.Model):
     province = models.ForeignKey(Province, blank=True, null=True,
             related_name='hotel_province')
     zipcode = models.CharField(max_length=10, blank=True, null=True)
-    country = models.CharField(max_length=50, default='Indonesia')
+    country = models.CharField(max_length=35, default='Indonesia')
     rating = models.IntegerField(default=3)
     room_type = models.CharField(max_length=3, choices=ROOM_TYPE_CHOICE)
-    facilities = models.ManyToMany(Facility, related_name='hotel_facility')
+    facilities = models.ManyToManyField(Facility, related_name='hotel_facility')
+
+    # Contact Info
+    phone_number = models.CharField(max_length=50, blank=False, null=False)
+    fax_number = models.CharField(max_length=50, blank=True, null=True)
+    cs_email = models.EmailField(max_length=75, blank=False, null=False, unique=True)
+    manager = models.ForeignKey(User, related_name='manager_user', blank=True,
+            null=True)
+    supervisor = models.ForeignKey(User, related_name='supervisor_user', blank=True,
+            null=True)
+    user = models.ForeignKey(User, related_name='user_user', blank=True, null=True)
 
     def __unicode__(self):
         """docstring for __unicode__"""
