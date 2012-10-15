@@ -1,44 +1,17 @@
 from django.db import models
 from geographic_info.models import City, Region, Province
-from django.contrib.auth.models import User
+from user_level.models import Manager, Supervisor, Receptionist
 
 
 class Facility(models.Model):
-    # FACILITY_CHOICE = (
-    #         ('WiFi', 'WiFi'),
-    #         ('Parking', 'Parking'),
-    #         ('Airport Shuttle', 'Airport Shuttle'),
-    # )
-
     facility = models.CharField(max_length=50)
 
     def __unicode__(self):
         """docstring for __unicode__"""
         return self.facility
 
-
-class HotelManagerUser(models.Model):
-    user = models.OneToOneField(User)
-
-    # Additional fields
-    phone_number = models.CharField(max_length=50, blank=True, null=True)
-    email = models.EmailField(max_length=75, blank=False, null=False, unique=True)
-
-
-class HotelSupervisorUser(models.Model):
-    user = models.OneToOneField(User)
-
-    # Additional fields
-    phone_number = models.CharField(max_length=50, blank=True, null=True)
-    email = models.EmailField(max_length=75, blank=False, null=False, unique=True)
-
-
-class HotelUser(models.Model):
-    user = models.OneToOneField(User)
-
-    # Additional fields
-    phone_number = models.CharField(max_length=50, blank=True, null=True)
-    email = models.EmailField(max_length=75, blank=False, null=False, unique=True)
+    class Meta:
+        verbose_name_plural = 'Facilities'
 
 
 class Hotel(models.Model):
@@ -69,11 +42,11 @@ class Hotel(models.Model):
     phone_number = models.CharField(max_length=50, blank=False, null=False)
     fax_number = models.CharField(max_length=50, blank=True, null=True)
     cs_email = models.EmailField(max_length=75, blank=True, null=True, unique=True)
-    manager = models.ForeignKey(HotelManagerUser, related_name='manager_user', blank=True,
+    manager = models.ForeignKey(Manager, related_name='manager_user', blank=True,
             null=True)
-    supervisor = models.ForeignKey(HotelSupervisorUser, related_name='supervisor_user', blank=True,
+    supervisor = models.ForeignKey(Supervisor, related_name='supervisor_user', blank=True,
             null=True)
-    user = models.ForeignKey(HotelUser, related_name='user_user', blank=True, null=True)
+    receptionist = models.ForeignKey(Receptionist, related_name='receptionist_user', blank=True, null=True)
 
     def __unicode__(self):
         """docstring for __unicode__"""

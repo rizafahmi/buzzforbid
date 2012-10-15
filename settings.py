@@ -97,6 +97,7 @@ INSTALLED_APPS = (
     # Our own models register
     'hotel',
     'geographic_info',
+    'user_level',
 )
 
 LOGGING = {
