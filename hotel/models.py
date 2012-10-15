@@ -1,7 +1,5 @@
 from django.db import models
-from city.models import City
-from region.models import Region
-from province.models import Province
+from geographic_info.models import City, Region, Province
 from django.contrib.auth.models import User
 
 

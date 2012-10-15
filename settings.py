@@ -95,10 +95,8 @@ INSTALLED_APPS = (
     'south',
 
     # Our own models register
-    'city',
-    'region',
     'hotel',
-    'province',
+    'geographic_info',
 )
 
 LOGGING = {
