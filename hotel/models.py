@@ -69,8 +69,7 @@ class Hotel(models.Model):
     phone_number = models.CharField(max_length=50, blank=False, null=False)
     fax_number = models.CharField(max_length=50, blank=True, null=True)
     cs_email = models.EmailField(max_length=75, blank=True, null=True, unique=True)
-    # manager = models.OneToOneField(Manager, related_name='manager_user', blank=True,
-    #         null=True)
+    manager = models.ForeignKey(Manager, related_name='manager_user', blank=True, null=True)
     supervisor = models.ForeignKey(Supervisor, related_name='supervisor_user', blank=True,
             null=True)
     receptionist = models.ForeignKey(Receptionist, related_name='receptionist_user', blank=True, null=True)
