@@ -61,18 +61,29 @@ class Hotel(models.Model):
     zipcode = models.CharField(max_length=10, blank=True, null=True)
     country = models.CharField(max_length=35, default='Indonesia')
     rating = models.IntegerField(default=3)
-    room_type = models.ManyToManyField(RoomType, related_name='hotel_room_type',
+    facilities = models.ManyToManyField(Facility, related_name='hotel_facility',
             blank=True, null=True)
-    facilities = models.ManyToManyField(Facility, related_name='hotel_facility')
+
+    # Room Info
+    room_type_1 = models.OneToOneField(RoomType, related_name='hotel_room_type_1',
+            blank=False, null=False)
+    room_type_2 = models.OneToOneField(RoomType, related_name='hotel_room_type_2',
+            blank=True, null=True)
+    room_type_3 = models.OneToOneField(RoomType, related_name='hotel_room_type_3',
+            blank=True, null=True)
+    room_type_4 = models.OneToOneField(RoomType, related_name='hotel_room_type_4',
+            blank=True, null=True)
 
     # Contact Info
     phone_number = models.CharField(max_length=50, blank=False, null=False)
     fax_number = models.CharField(max_length=50, blank=True, null=True)
     cs_email = models.EmailField(max_length=75, blank=True, null=True, unique=True)
-    manager = models.ForeignKey(Manager, related_name='manager_user', blank=True, null=True)
-    supervisor = models.ForeignKey(Supervisor, related_name='supervisor_user', blank=True,
+    manager = models.OneToOneField(Manager, related_name='manager_user', blank=True,
             null=True)
-    receptionist = models.ForeignKey(Receptionist, related_name='receptionist_user', blank=True, null=True)
+    supervisor = models.OneToOneField(Supervisor, related_name='supervisor_user', blank=True,
+             null=True)
+    receptionist = models.OneToOneField(Receptionist,
+            related_name='receptionist_user', blank=False, null=False)
 
     def __unicode__(self):
         """docstring for __unicode__"""

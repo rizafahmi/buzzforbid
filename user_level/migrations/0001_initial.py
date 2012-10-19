@@ -12,6 +12,7 @@ class Migration(SchemaMigration):
         db.create_table('user_level_manager', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('phone_number', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
         ))
@@ -21,6 +22,7 @@ class Migration(SchemaMigration):
         db.create_table('user_level_supervisor', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('phone_number', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
         ))
@@ -30,6 +32,7 @@ class Migration(SchemaMigration):
         db.create_table('user_level_receptionist', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('phone_number', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
         ))
@@ -86,6 +89,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Manager'},
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'phone_number': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
@@ -93,6 +97,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Receptionist'},
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'phone_number': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
@@ -100,6 +105,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Supervisor'},
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'phone_number': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
