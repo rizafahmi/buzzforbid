@@ -1,6 +1,7 @@
 from django.db import models
 from geographic_info.models import City, Region, Province
 from user_level.models import Manager, Supervisor, Receptionist
+from room_type.models import RoomType1, RoomType2, RoomType3, RoomType4
 
 
 class Facility(models.Model):
@@ -14,40 +15,7 @@ class Facility(models.Model):
         verbose_name_plural = 'Facilities'
 
 
-class RoomFacility(models.Model):
-    facility = models.CharField(max_length=50)
-
-    def __unicode__(self):
-        """docstring for __unicode__"""
-        return self.facility
-
-    class Meta:
-        verbose_name_plural = 'Room Facilities'
-
-
-class RoomType(models.Model):
-    """Model for Hotel Room Type"""
-    room_type_name = models.CharField(max_length=50, blank=False, null=False)
-    allotment = models.IntegerField(blank=True, null=True)
-    room_size = models.CharField(max_length=25, blank=True, null=True)
-    bed_size = models.CharField(max_length=25, blank=True, null=True)
-    number_of_bed = models.IntegerField(blank=False, null=False, default=1)
-    room_facilities = models.ManyToManyField(RoomFacility,
-            related_name='room_facility', blank=True, null=True)
-    short_description = models.TextField(blank=True, null=True)
-
-    def __unicode__(self):
-        return self.room_type_name
-
-
 class Hotel(models.Model):
-
-    ROOM_TYPE_CHOICE = (
-            ('st', 'Standard'),
-            ('su', 'Superior'),
-            ('de', 'Deluxe'),
-            ('stu', 'Studio'),
-        )
 
     # General Info
     name = models.CharField(max_length=100, blank=False, null=False, unique=True)
@@ -65,13 +33,13 @@ class Hotel(models.Model):
             blank=True, null=True)
 
     # Room Info
-    room_type_1 = models.OneToOneField(RoomType, related_name='hotel_room_type_1',
+    room_type_1 = models.OneToOneField(RoomType1, related_name='hotel_room_type_1',
             blank=False, null=False)
-    room_type_2 = models.OneToOneField(RoomType, related_name='hotel_room_type_2',
+    room_type_2 = models.OneToOneField(RoomType2, related_name='hotel_room_type_2',
             blank=True, null=True)
-    room_type_3 = models.OneToOneField(RoomType, related_name='hotel_room_type_3',
+    room_type_3 = models.OneToOneField(RoomType3, related_name='hotel_room_type_3',
             blank=True, null=True)
-    room_type_4 = models.OneToOneField(RoomType, related_name='hotel_room_type_4',
+    room_type_4 = models.OneToOneField(RoomType4, related_name='hotel_room_type_4',
             blank=True, null=True)
 
     # Contact Info

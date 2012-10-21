@@ -8,39 +8,44 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Facility'
-        db.create_table('hotel_facility', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('facility', self.gf('django.db.models.fields.CharField')(max_length=50)),
-        ))
-        db.send_create_signal('hotel', ['Facility'])
+        # Deleting model 'RoomType'
+        db.delete_table('hotel_roomtype')
 
-        # Adding model 'RoomFacility'
-        db.create_table('hotel_roomfacility', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('facility', self.gf('django.db.models.fields.CharField')(max_length=50)),
-        ))
-        db.send_create_signal('hotel', ['RoomFacility'])
+        # Removing M2M table for field room_facilities on 'RoomType'
+        db.delete_table('hotel_roomtype_room_facilities')
 
+        # Deleting model 'RoomFacility'
+        db.delete_table('hotel_roomfacility')
+
+
+        # Changing field 'Hotel.room_type_2'
+        db.alter_column('hotel_hotel', 'room_type_2_id', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, null=True, to=orm['room_type.RoomType2']))
+
+        # Changing field 'Hotel.room_type_3'
+        db.alter_column('hotel_hotel', 'room_type_3_id', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, null=True, to=orm['room_type.RoomType3']))
+
+        # Changing field 'Hotel.room_type_4'
+        db.alter_column('hotel_hotel', 'room_type_4_id', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, null=True, to=orm['room_type.RoomType4']))
+    def backwards(self, orm):
         # Adding model 'RoomType'
         db.create_table('hotel_roomtype', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('room_type_name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('allotment', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('room_size', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('bed_size', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
-            ('number_of_bed', self.gf('django.db.models.fields.IntegerField')(default=1)),
-            ('short_description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('default_price', self.gf('django.db.models.fields.IntegerField')()),
+            ('low_season_price', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('high_season_from', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('high_season_to', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
             ('high_season_price', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
+            ('room_size', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
+            ('special_occation_from', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('short_description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('special_occation_to', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('high_season_to', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('room_type_name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('number_of_bed', self.gf('django.db.models.fields.IntegerField')(default=1)),
+            ('allotment', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('low_season_from', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
             ('low_season_to', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('low_season_price', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('special_occation_from', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('special_occation_to', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('bed_size', self.gf('django.db.models.fields.CharField')(max_length=25, null=True, blank=True)),
             ('special_occation_price', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
         ))
         db.send_create_signal('hotel', ['RoomType'])
 
@@ -52,58 +57,22 @@ class Migration(SchemaMigration):
         ))
         db.create_unique('hotel_roomtype_room_facilities', ['roomtype_id', 'roomfacility_id'])
 
-        # Adding model 'Hotel'
-        db.create_table('hotel_hotel', (
+        # Adding model 'RoomFacility'
+        db.create_table('hotel_roomfacility', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
-            ('address1', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('address2', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('city', self.gf('django.db.models.fields.related.ForeignKey')(related_name='hotel_city', to=orm['geographic_info.City'])),
-            ('region', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='hotel_region', null=True, to=orm['geographic_info.Region'])),
-            ('province', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='hotel_province', null=True, to=orm['geographic_info.Province'])),
-            ('zipcode', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('country', self.gf('django.db.models.fields.CharField')(default='Indonesia', max_length=35)),
-            ('rating', self.gf('django.db.models.fields.IntegerField')(default=3)),
-            ('room_type_1', self.gf('django.db.models.fields.related.OneToOneField')(related_name='hotel_room_type_1', unique=True, to=orm['room_type.RoomType1'])),
-            ('room_type_2', self.gf('django.db.models.fields.related.OneToOneField')(blank=True, related_name='hotel_room_type_2', unique=True, null=True, to=orm['hotel.RoomType'])),
-            ('room_type_3', self.gf('django.db.models.fields.related.OneToOneField')(blank=True, related_name='hotel_room_type_3', unique=True, null=True, to=orm['hotel.RoomType'])),
-            ('room_type_4', self.gf('django.db.models.fields.related.OneToOneField')(blank=True, related_name='hotel_room_type_4', unique=True, null=True, to=orm['hotel.RoomType'])),
-            ('phone_number', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('fax_number', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('cs_email', self.gf('django.db.models.fields.EmailField')(max_length=75, unique=True, null=True, blank=True)),
-            ('manager', self.gf('django.db.models.fields.related.OneToOneField')(blank=True, related_name='manager_user', unique=True, null=True, to=orm['user_level.Manager'])),
-            ('supervisor', self.gf('django.db.models.fields.related.OneToOneField')(blank=True, related_name='supervisor_user', unique=True, null=True, to=orm['user_level.Supervisor'])),
-            ('receptionist', self.gf('django.db.models.fields.related.OneToOneField')(related_name='receptionist_user', unique=True, to=orm['user_level.Receptionist'])),
+            ('facility', self.gf('django.db.models.fields.CharField')(max_length=50)),
         ))
-        db.send_create_signal('hotel', ['Hotel'])
+        db.send_create_signal('hotel', ['RoomFacility'])
 
-        # Adding M2M table for field facilities on 'Hotel'
-        db.create_table('hotel_hotel_facilities', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('hotel', models.ForeignKey(orm['hotel.hotel'], null=False)),
-            ('facility', models.ForeignKey(orm['hotel.facility'], null=False))
-        ))
-        db.create_unique('hotel_hotel_facilities', ['hotel_id', 'facility_id'])
 
-    def backwards(self, orm):
-        # Deleting model 'Facility'
-        db.delete_table('hotel_facility')
+        # Changing field 'Hotel.room_type_2'
+        db.alter_column('hotel_hotel', 'room_type_2_id', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, null=True, to=orm['hotel.RoomType']))
 
-        # Deleting model 'RoomFacility'
-        db.delete_table('hotel_roomfacility')
+        # Changing field 'Hotel.room_type_3'
+        db.alter_column('hotel_hotel', 'room_type_3_id', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, null=True, to=orm['hotel.RoomType']))
 
-        # Deleting model 'RoomType'
-        db.delete_table('hotel_roomtype')
-
-        # Removing M2M table for field room_facilities on 'RoomType'
-        db.delete_table('hotel_roomtype_room_facilities')
-
-        # Deleting model 'Hotel'
-        db.delete_table('hotel_hotel')
-
-        # Removing M2M table for field facilities on 'Hotel'
-        db.delete_table('hotel_hotel_facilities')
-
+        # Changing field 'Hotel.room_type_4'
+        db.alter_column('hotel_hotel', 'room_type_4_id', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, null=True, to=orm['hotel.RoomType']))
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -180,37 +149,11 @@ class Migration(SchemaMigration):
             'receptionist': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'receptionist_user'", 'unique': 'True', 'to': "orm['user_level.Receptionist']"}),
             'region': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'hotel_region'", 'null': 'True', 'to': "orm['geographic_info.Region']"}),
             'room_type_1': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'hotel_room_type_1'", 'unique': 'True', 'to': "orm['room_type.RoomType1']"}),
-            'room_type_2': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'hotel_room_type_2'", 'unique': 'True', 'null': 'True', 'to': "orm['hotel.RoomType']"}),
-            'room_type_3': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'hotel_room_type_3'", 'unique': 'True', 'null': 'True', 'to': "orm['hotel.RoomType']"}),
-            'room_type_4': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'hotel_room_type_4'", 'unique': 'True', 'null': 'True', 'to': "orm['hotel.RoomType']"}),
+            'room_type_2': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'hotel_room_type_2'", 'unique': 'True', 'null': 'True', 'to': "orm['room_type.RoomType2']"}),
+            'room_type_3': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'hotel_room_type_3'", 'unique': 'True', 'null': 'True', 'to': "orm['room_type.RoomType3']"}),
+            'room_type_4': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'hotel_room_type_4'", 'unique': 'True', 'null': 'True', 'to': "orm['room_type.RoomType4']"}),
             'supervisor': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'supervisor_user'", 'unique': 'True', 'null': 'True', 'to': "orm['user_level.Supervisor']"}),
             'zipcode': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'})
-        },
-        'hotel.roomfacility': {
-            'Meta': {'object_name': 'RoomFacility'},
-            'facility': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
-        },
-        'hotel.roomtype': {
-            'Meta': {'object_name': 'RoomType'},
-            'allotment': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'bed_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
-            'default_price': ('django.db.models.fields.IntegerField', [], {}),
-            'high_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'high_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'high_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'low_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'low_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'low_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'number_of_bed': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
-            'room_facilities': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'room_facility'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['hotel.RoomFacility']"}),
-            'room_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
-            'room_type_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'short_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'special_occation_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'special_occation_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'special_occation_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'})
         },
         'room_type.roomfacility': {
             'Meta': {'object_name': 'RoomFacility'},
@@ -230,7 +173,70 @@ class Migration(SchemaMigration):
             'low_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'low_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'number_of_bed': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
-            'room_facilities': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'room_facility'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['room_type.RoomFacility']"}),
+            'room_facilities': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'room1_facility'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['room_type.RoomFacility']"}),
+            'room_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'room_type_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'short_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'})
+        },
+        'room_type.roomtype2': {
+            'Meta': {'object_name': 'RoomType2'},
+            'allotment': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'bed_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'default_price': ('django.db.models.fields.IntegerField', [], {}),
+            'high_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'high_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'high_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'low_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'low_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'low_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'number_of_bed': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
+            'room_facilities': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'room2_facility'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['room_type.RoomFacility']"}),
+            'room_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'room_type_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'short_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'})
+        },
+        'room_type.roomtype3': {
+            'Meta': {'object_name': 'RoomType3'},
+            'allotment': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'bed_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'default_price': ('django.db.models.fields.IntegerField', [], {}),
+            'high_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'high_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'high_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'low_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'low_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'low_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'number_of_bed': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
+            'room_facilities': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'room3_facility'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['room_type.RoomFacility']"}),
+            'room_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'room_type_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'short_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'special_occation_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'})
+        },
+        'room_type.roomtype4': {
+            'Meta': {'object_name': 'RoomType4'},
+            'allotment': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'bed_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
+            'default_price': ('django.db.models.fields.IntegerField', [], {}),
+            'high_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'high_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'high_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'low_season_from': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'low_season_price': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'low_season_to': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'number_of_bed': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
+            'room_facilities': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'room4_facility'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['room_type.RoomFacility']"}),
             'room_size': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),
             'room_type_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'short_description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),

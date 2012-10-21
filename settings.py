@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'hotel',
     'geographic_info',
     'user_level',
+    'room_type',
 )
 
 LOGGING = {
