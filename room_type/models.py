@@ -45,6 +45,9 @@ class RoomType1(models.Model):
         hotel = Hotel.objects.filter(room_type_1__room_type_name=self.room_type_name)
         return self.room_type_name + " - " + hotel[0].name
 
+    class Meta:
+        verbose_name_plural = 'Room Type 1'
+
 
 class RoomType2(models.Model):
     """Model for Hotel Room Type2"""
@@ -74,6 +77,9 @@ class RoomType2(models.Model):
 
     def __unicode__(self):
         return self.room_type_name
+
+    class Meta:
+        verbose_name_plural = 'Room Type 2'
 
 
 class RoomType3(models.Model):
@@ -105,6 +111,9 @@ class RoomType3(models.Model):
     def __unicode__(self):
         return self.room_type_name
 
+    class Meta:
+        verbose_name_plural = 'Room Type 3'
+
 
 class RoomType4(models.Model):
     """Model for Hotel Room Type 4"""
@@ -134,3 +143,6 @@ class RoomType4(models.Model):
 
     def __unicode__(self):
         return self.room_type_name
+
+    class Meta:
+        verbose_name_plural = 'Room Type 4'
