@@ -45,6 +45,14 @@ class RoomType1(models.Model):
         hotel = Hotel.objects.filter(room_type_1__room_type_name=self.room_type_name)
         return self.room_type_name + " - " + hotel[0].name
 
+    def get_facilities(self):
+        all_facilities = ""
+        for f in self.room_facilities.all():
+            all_facilities += f.facility + ", "
+        # return ", ".join([f.faciltiy for f in self.room_facilities.all()])
+        return all_facilities[:-2]
+    get_facilities.short_description = 'Room Facilities'
+
     class Meta:
         verbose_name_plural = 'Room Type 1'
 
@@ -77,6 +85,14 @@ class RoomType2(models.Model):
 
     def __unicode__(self):
         return self.room_type_name
+
+    def get_facilities(self):
+        all_facilities = ""
+        for f in self.room_facilities.all():
+            all_facilities += f.facility + ", "
+        # return ", ".join([f.faciltiy for f in self.room_facilities.all()])
+        return all_facilities[:-2]
+    get_facilities.short_description = 'Room Facilities'
 
     class Meta:
         verbose_name_plural = 'Room Type 2'
@@ -111,6 +127,14 @@ class RoomType3(models.Model):
     def __unicode__(self):
         return self.room_type_name
 
+    def get_facilities(self):
+        all_facilities = ""
+        for f in self.room_facilities.all():
+            all_facilities += f.facility + ", "
+        # return ", ".join([f.faciltiy for f in self.room_facilities.all()])
+        return all_facilities[:-2]
+    get_facilities.short_description = 'Room Facilities'
+
     class Meta:
         verbose_name_plural = 'Room Type 3'
 
@@ -143,6 +167,14 @@ class RoomType4(models.Model):
 
     def __unicode__(self):
         return self.room_type_name
+
+    def get_facilities(self):
+        all_facilities = ""
+        for f in self.room_facilities.all():
+            all_facilities += f.facility + ", "
+        # return ", ".join([f.faciltiy for f in self.room_facilities.all()])
+        return all_facilities[:-2]
+    get_facilities.short_description = 'Room Facilities'
 
     class Meta:
         verbose_name_plural = 'Room Type 4'
