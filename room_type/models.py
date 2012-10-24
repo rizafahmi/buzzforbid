@@ -2,7 +2,7 @@ from django.db import models
 
 
 class RoomFacility(models.Model):
-    facility = models.CharField(max_length=50)
+    facility = models.CharField(max_length=50, unique=True)
 
     def __unicode__(self):
         """docstring for __unicode__"""
@@ -28,6 +28,7 @@ class RoomType1(models.Model):
     # Price Info
     default_price = models.IntegerField(blank=False, null=False)
     default_publish_price = models.IntegerField(blank=False, null=False)
+    include_breakfast = models.BooleanField()
 
     high_season_from = models.DateField(blank=True, null=True)
     high_season_to = models.DateField(blank=True, null=True)
@@ -47,7 +48,9 @@ class RoomType1(models.Model):
     def __unicode__(self):
         from hotel.models import Hotel
         hotel = Hotel.objects.filter(room_type_1__room_type_name=self.room_type_name)
-        return self.room_type_name + " - " + hotel[0].name
+        if hotel:
+            return self.room_type_name + " - " + hotel[0].name
+        return self.room_type_name
 
     def get_facilities(self):
         all_facilities = ""

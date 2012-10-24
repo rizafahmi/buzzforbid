@@ -5,7 +5,7 @@ from room_type.models import RoomType1, RoomType2, RoomType3, RoomType4
 
 
 class Facility(models.Model):
-    facility = models.CharField(max_length=50)
+    facility = models.CharField(max_length=50, unique=True)
 
     def __unicode__(self):
         """docstring for __unicode__"""
@@ -45,7 +45,7 @@ class Hotel(models.Model):
     # Contact Info
     phone_number = models.CharField(max_length=50, blank=False, null=False)
     fax_number = models.CharField(max_length=50, blank=True, null=True)
-    cs_email = models.EmailField(max_length=75, blank=True, null=True, unique=True)
+    cs_email = models.EmailField(max_length=75, blank=True, null=True)
     manager = models.OneToOneField(Manager, related_name='manager_user', blank=True,
             null=True)
     supervisor = models.OneToOneField(Supervisor, related_name='supervisor_user', blank=True,
