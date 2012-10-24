@@ -27,18 +27,22 @@ class RoomType1(models.Model):
 
     # Price Info
     default_price = models.IntegerField(blank=False, null=False)
+    default_publish_price = models.IntegerField(blank=False, null=False)
 
     high_season_from = models.DateField(blank=True, null=True)
     high_season_to = models.DateField(blank=True, null=True)
     high_season_price = models.IntegerField(blank=True, null=True)
+    high_season_publish_price = models.IntegerField(blank=True, null=True)
 
     low_season_from = models.DateField(blank=True, null=True)
     low_season_to = models.DateField(blank=True, null=True)
     low_season_price = models.IntegerField(blank=True, null=True)
+    low_season_publish_price = models.IntegerField(blank=True, null=True)
 
     special_occation_from = models.DateField(blank=True, null=True)
     special_occation_to = models.DateField(blank=True, null=True)
     special_occation_price = models.IntegerField(blank=True, null=True)
+    special_occation_publish_price = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         from hotel.models import Hotel

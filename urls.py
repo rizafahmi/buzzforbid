@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from hotel.api import HotelResource
+from geographic_info.api import CityResource
 
 hotel_resource = HotelResource()
 
@@ -22,4 +23,5 @@ urlpatterns = patterns('',
 
     # API
     url(r'^api/', include(hotel_resource.urls)),
+    url(r'^api/', include(CityResource().urls)),
 )
