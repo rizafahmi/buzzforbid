@@ -1,7 +1,9 @@
 # Django settings for buzzforbid project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+PROJECT_DIR = os.path.abspath(os.path. dirname(__file__))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -42,9 +44,7 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'grappelli/'
 
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_DIR, 'static/'),
 )
 
 STATICFILES_FINDERS = (
@@ -72,9 +72,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'buzzforbid.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_DIR, 'templates/')
 )
 
 INSTALLED_APPS = (
@@ -121,10 +119,11 @@ LOGGING = {
 
 # Grappelli Setting
 GRAPPELLI_ADMIN_TITLE = 'BuzzForbid Admin Site'
-# TEMPLATE_CONTEXT_PROCESSORS = (
-#     "django.contrib.auth.context_processors.auth",
-#     "django.core.context_processors.request",
-#     "django.core.context_processors.i18n",
-#     'django.contrib.messages.context_processors.messages',
-# )
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.request",
+    "django.core.context_processors.i18n",
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.static',
+)
 # GRAPPELLI_INDEX_DASHBOARD = 'buzzforbid.dashboard.CustomIndexDashboard'

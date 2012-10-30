@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Buzzforbid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Buzzforbid</a>
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i> Username
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Sign Out</a></li>
+            </ul>
+          </div>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+    </script>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          <form action="" method="get" class="form-horizontal" accept-charset="utf-8">
+              
+            <div class="control-group">
+              <label for="city" class="control-label">City</label>
+              <div class="controls">
+                <select name="city" id="city">
+                  <option value="{{city.id}}">-- SELECT CITY --</option>                  
+                  {% for city in cities %}
+                  <option value="{{city.id}}">{{city.city}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="date" class="control-label">Date</label>
+              <div class="controls">
+                <input type="text" name="fromdate" id="fromdate" value=""
+                data-date="22-02-2012" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" />
+              </div>
+            </div>
+            <div class="control-group" ng-show="city">
+              <label for="region" class="control-label">Region</label>
+              <div class="controls">
+                <select id="region" name="region" multiple>
+                  <option value="{{region.id}}" ng-repeat="region in
+                  regions | filter:{city.id: city}">{{region.region_name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="star" class="control-label">Stars</label>
+              <div class="controls"><select class="span1" id="star" name="" ng-model="star">
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select></div>
+            </div>
+            <div class="control-group">
+              <label for="price" class="control-label">Price</label>
+              <div class="controls">
+                <input type="text" name="price" id="price" ng-model="price" value=""
+                placeholder="100000" />
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls"><button class="btn
+                  btn-primary" ng-click="search()">Search!</button>&nbsp;<button type="" class="btn
+                  btn-danger">Reset</button></div>
+            </div>
+          </form>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-transition.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-alert.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-scrollspy.js"></script> -->
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-tab.js"></script> -->
+    <script src="{{ STATIC_URL }}js/bootstrap-tooltip.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-popover.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-button.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-collapse.js"></script> -->
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-carousel.js"></script> -->
+
+  </body>
+</html>

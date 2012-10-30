@@ -46,10 +46,10 @@ class RoomType1(models.Model):
     special_occation_publish_price = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
-        from hotel.models import Hotel
-        hotel = Hotel.objects.filter(room_type_1__room_type_name=self.room_type_name)
-        if hotel:
-            return self.room_type_name + " - " + hotel[0].name
+        # from hotel.models import Hotel
+        # hotel = Hotel.objects.filter(room_type_1__room_type_name=self.room_type_name)
+        # if hotel:
+        #     return self.room_type_name + " - " + hotel[0].name
         return self.room_type_name
 
     def get_facilities(self):
