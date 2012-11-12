@@ -3,14 +3,22 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.utils import simplejson
 from hotel.models import Hotel
+from hotel.forms import SearchForm
 from geographic_info.models import City, Region
 
 
 def home(request):
-    hotels = Hotel.objects.all()
-    cities = City.objects.all()
-    regions = Region.objects.all().values_list('region_name', 'city')
-    return render_to_response('index.html', {'hotels': hotels, 'cities': cities, 'regions': simplejson.dumps(list(regions))},
+    # hotels = Hotel.objects.all()
+    # cities = City.objects.all()
+    # regions = Region.objects.all().values_list('region_name', 'city')
+    # return render_to_response('index.html', {'hotels': hotels, 'cities': cities, 'regions': simplejson.dumps(list(regions))},
+    #         context_instance=RequestContext(request))
+
+    if request.POST:
+        print request.POST, request.POST.getlist('region')
+
+    return render_to_response('index.html',
+            {'form': SearchForm()},
             context_instance=RequestContext(request))
 
 
