@@ -4,7 +4,23 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from hotel.models import Hotel
 from hotel.forms import SearchForm
-from geographic_info.models import City, Region
+from geographic_info.models import Region
+
+
+def search_hotels(request, priority):
+    if priority == 1:  # Raise the price
+        raise_price = request.POST['price'] + (request.POST['price'] * 0.25)
+        return Hotel.objects.filter(city=request.POST['city'],
+                room_type_1__default_publish_price__lte=raise_price,
+                room_type_1__allotment__gte=request.POST['number_of_rooms'],
+                rating__gte=request.POST['stars'])
+    elif priority == 2:  # Skip the price
+        return Hotel.objects.filter(city=request.POST['city'],
+                room_type_1__allotment__gte=request.POST['number_of_rooms'],
+                rating__gte=request.POST['stars'])
+    # Skip the price and rating
+    return Hotel.objects.filter(city=request.POST['city'],
+            room_type_1__allotment__gte=request.POST['number_of_rooms'])
 
 
 def home(request):
@@ -15,7 +31,26 @@ def home(request):
     #         context_instance=RequestContext(request))
 
     if request.POST:
-        print request.POST, request.POST.getlist('region')
+        # print request.POST, request.POST.getlist('region')
+
+        # search for hotels
+        # Check apakah date masuk ke salah satu season
+            # Kalo masuk, cari harganya
+
+            # Kalo ngga masuk harganya default
+        hotels = Hotel.objects.filter(city=request.POST['city'],
+                rating__gte=request.POST['stars'],
+                room_type_1__allotment__gte=request.POST['number_of_rooms'],
+                room_type_1__default_publish_price__lte=request.POST['price'])
+
+        # cek dulu, kalo result nya sedikit, dikurangin search parameter nya
+        # while jumlah < 4 iterasi cari sampe hasil > 4
+        iter = 1
+        while hotels < 4:
+            hotels += search_hotels(request, iter)
+            iter = iter + 1
+
+        # iterate hotels, save to request model
 
     return render_to_response('index.html',
             {'form': SearchForm()},

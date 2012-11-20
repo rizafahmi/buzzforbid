@@ -8,7 +8,9 @@ class SearchForm(forms.Form):
     city = forms.ModelChoiceField(label='City', required=True,
             queryset=City.objects.all(),
             widget=forms.Select(attrs={'onchange': 'FilterModel();'}))
-    date = forms.DateTimeField(label='Date',
+    checkin = forms.DateTimeField(label='Check-in',
+            widget=forms.TextInput(attrs={'placeholder': 'dd-mm-yyyy'}))
+    checkout = forms.DateTimeField(label='Check-out',
             widget=forms.TextInput(attrs={'placeholder': 'dd-mm-yyyy'}))
     region = forms.ModelChoiceField(label='Region', required=False,
             queryset=Region.objects.all(),
@@ -16,5 +18,7 @@ class SearchForm(forms.Form):
                 'name': 'region[]'}))
     stars = forms.ChoiceField(label='Stars', widget=forms.Select,
             choices=STAR_CHOICES)
-    price = forms.IntegerField(label='Price',
+    price = forms.IntegerField(label='Maximum Price',
             widget=forms.TextInput(attrs={'placeholder': '250000'}))
+    number_of_rooms = forms.IntegerField(label='No. Of Room',
+            widget=forms.TextInput(attrs={'placeholder': '1'}))
