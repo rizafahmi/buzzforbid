@@ -97,6 +97,8 @@ INSTALLED_APPS = (
     'geographic_info',
     'user_level',
     'room_type',
+    'tour_request',
+    'travel_agent',
 )
 
 LOGGING = {
