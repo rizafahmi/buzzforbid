@@ -10,6 +10,7 @@ from geographic_info.api import CityResource, RegionResource
 
 urlpatterns = patterns('',
     url(r'^hotel/', include('hotel.urls')),
+    url(r'^tour_request/', include('tour_request.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
 

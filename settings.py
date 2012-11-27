@@ -129,3 +129,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
 )
 # GRAPPELLI_INDEX_DASHBOARD = 'buzzforbid.dashboard.CustomIndexDashboard'
+
+
+EMAIL_HOST = 'mail.ionsoft.co.id'
+EMAIL_PORT = 25
+DEFAULT_FROM_EMAIL = 'I Love School <iloveschool@iyaa.com>'
+EMAIL_HOST_USER = 'iloveschool@iyaa.com'
+EMAIL_HOST_PASSWORD = '12345678'

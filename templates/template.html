@@ -1,0 +1,25 @@
+<h1>Hello Nurse!</h1>
+<p>
+Welcome {{name}},
+
+This is your weekly request from user
+<table border="1">
+    <tr>
+      <th>Date</th>
+      <th>Duration</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+{% for request in requests %}
+  <tr>
+    <td>{{request.date}}</td>
+    <td>{{request.duration}}</td>
+    <td>{{request.price}}</td>
+    <td><a
+        href="http://localhost:8080/admin/tour_request/request/{{request.id}}/">View</a></td>
+  </tr>
+{% endfor %}
+</table>
+<br />
+Goodbye!
+</p>
