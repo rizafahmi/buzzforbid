@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Buzzforbid Tour</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Buzzforbid</a>
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i> Username
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Sign Out</a></li>
+            </ul>
+          </div>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+    </script>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          <form action="" method="post" class="form-horizontal" accept-charset="utf-8">
+            {% csrf_token %}
+            <div class="control-group">
+              <label for="destinations"
+                class="control-label">Destinations</label>
+              <div class="controls">
+                <input type="text" name="destinations"
+                id="destinations" readonly value="{% for req in tour_request.destinations.all%}{{req}}, {% endfor %}" />              </div>
+            </div>
+            <div class="control-group">
+              <label for="date"
+                class="control-label">Date</label>
+              <div class="controls">
+                <input type="text" name="date" id="date"
+                value="{{tour_request.date}}" readonly />
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="duration"
+                class="control-label">Duration in day(s)</label>
+              <div class="controls">
+                <input type="text" name="duration" id="duration"
+                value="{{tour_request.duration}}" class="span1" readonly />
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="adult"
+                class="control-label">Adult(s)</label>
+              <div class="controls">
+                <input type="text" name="adult" id="adult"
+                value="{{tour_request.adult}}" class="span1" readonly />
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="child"
+                class="control-label">Child</label>
+              <div class="controls">
+                <input type="text" name="child" id="child"
+                value="{{tour_request.child}}" class="span1" readonly />
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="airplane"
+                class="control-label">Airplane?</label>
+              <div class="controls">
+                {% if tour_request.airplane %}
+                <input type="checkbox" name="airplane" id="airplane"
+                checked="checked" />
+                {% else %}
+                <input type="checkbox" name="airplane" id="airplane" />
+                {% endif %}
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="accomodation"
+                class="control-label">Accomodation?</label>
+              <div class="controls">
+                {% if tour_request.accomodation %}
+                <input type="checkbox" name="accomodation" id="accomodation"
+                checked="checked" />
+                {% else %}
+                <input type="checkbox" name="accomodation" id="accomodation" />
+                {% endif %}
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="special_request"
+                class="control-label">Special Request</label>
+              <div class="controls">
+                <textarea name="special_request" id="special_request" rows="3"
+                  cols="40">{{tour_request.special_request}}</textarea>
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="price"
+                class="control-label">Min. Price</label>
+              <div class="controls">
+                <input type="text" name="price" id="price"
+                value="{{tour_request.price}}" />
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls"><button class="btn
+                  btn-primary" id="acceptButton" name="acceptButton"
+                  value="accept">Accept</button>&nbsp;<button type="" class="btn
+                  btn-danger" id="rejectButton" name="rejectButton"
+                  value="reject">Reject</button></div>
+            </div>
+          </form>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-transition.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-alert.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-scrollspy.js"></script> -->
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-tab.js"></script> -->
+    <script src="{{ STATIC_URL }}js/bootstrap-tooltip.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-popover.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-button.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-collapse.js"></script> -->
+    <!-- <script src="{{ STATIC_URL }}js/bootstrap-carousel.js"></script> -->
+
+    <script type="text/javascript" charset="utf-8">
+      $("#id_region").empty();
+      function FilterModel() {
+        $("#id_region").empty();
+        $.getJSON('http://localhost:8080/api/city/'+ $("#id_city").val() +'/?format=json',
+            function(data){
+              var items = [];
+              $.each(data, function(key, val){
+                if (key==='regions'){
+                  for(var i=0; i < val.length; i++){
+                    $.ajax({
+                      url: 'http://localhost:8080'+ val[i] +
+                      '?format=json',
+                      async: false,
+                      dataType: 'json',
+                      success: function(subdata){
+                      items.push('<option value="' + subdata.id + '">' +
+                        subdata.region_name + '</option>');
+                      $("#id_region").append('<option value="' + subdata.id + '">' + subdata.region_name + '</option>');
+                      
+                      }
+                    });
+                  }
+                }
+              });
+            });
+        $("#id_region").prop('disabled', false);
+      }
+    </script>
+
+  </body>
+</html>

@@ -5,6 +5,7 @@ Welcome {{name}},
 This is your weekly request from user
 <table border="1">
     <tr>
+      <th>Destination</th>
       <th>Date</th>
       <th>Duration</th>
       <th>Price</th>
@@ -12,11 +13,16 @@ This is your weekly request from user
     </tr>
 {% for request in requests %}
   <tr>
+    <td>
+    {% for destination in request.destinations.all %}
+      {{destination}}, 
+    {% endfor %}
+    </td>
     <td>{{request.date}}</td>
     <td>{{request.duration}}</td>
     <td>{{request.price}}</td>
     <td><a
-        href="http://localhost:8080/admin/tour_request/request/{{request.id}}/">View</a></td>
+        href="http://localhost:8080/tour_request/id/{{request.id}}">View</a></td>
   </tr>
 {% endfor %}
 </table>

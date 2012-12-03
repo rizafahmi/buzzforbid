@@ -131,8 +131,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # GRAPPELLI_INDEX_DASHBOARD = 'buzzforbid.dashboard.CustomIndexDashboard'
 
 
-EMAIL_HOST = 'mail.ionsoft.co.id'
-EMAIL_PORT = 25
-DEFAULT_FROM_EMAIL = 'I Love School <iloveschool@iyaa.com>'
-EMAIL_HOST_USER = 'iloveschool@iyaa.com'
-EMAIL_HOST_PASSWORD = '12345678'
+# EMAIL_HOST = 'mail.ionsoft.co.id'
+# EMAIL_PORT = 25
+# DEFAULT_FROM_EMAIL = 'I Love School <iloveschool@iyaa.com>'
+# EMAIL_HOST_USER = 'iloveschool@iyaa.com'
+# EMAIL_HOST_PASSWORD = '12345678'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Buzzforbid Tour <tour@buzzforbid.com>'
+EMAIL_HOST_USER = 'rizafahmi@gmail.com'
+EMAIL_HOST_PASSWORD = 'diyah02071982'
