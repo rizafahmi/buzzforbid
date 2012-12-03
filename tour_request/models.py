@@ -24,6 +24,8 @@ class Request(models.Model):
     price = models.IntegerField(default=0)
     status = models.CharField(max_length=25, blank=True, null=True,
             choices=STATUS_CHOICES)
+    attachment = models.FileField(upload_to='uploads/', blank=True, null=True)
+    notes = models.TextField(blank=True, null=True)
 
     # Metadata
     created = models.DateTimeField(auto_now=True, auto_now_add=True)
