@@ -22,8 +22,12 @@ def editrequest(request, request_id):
             tour_request.save()
 
             # send email to user directly : Temporary attemp only!
-            subject, from_email, to = 'Buzzforbid: Your Tour Request Has Accepted!', 'tour@buzzforbid.com', tour_request.user.email
-            html_content = 'Congratulations, your request has been accepted!'
+            if status == 'accepted':
+                subject, from_email, to = 'Buzzforbid: Your Tour Request Has Accepted!', 'tour@buzzforbid.com', tour_request.user.email
+                html_content = 'Congratulations, your request has been accepted!'
+            else:
+                subject, from_email, to = 'Buzzforbid: Your Tour Request Has Rejected!', 'tour@buzzforbid.com', tour_request.user.email
+                html_content = 'Sorry, your request has been rejected. Try again soon ya!'
             text_content = html_content
             msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
