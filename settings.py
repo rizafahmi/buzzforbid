@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'tastypie',
     'south',
+    'registration',
 
     # Our own models register
     'hotel',
@@ -143,3 +144,6 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Buzzforbid Tour <tour@buzzforbid.com>'
 EMAIL_HOST_USER = 'rizafahmi@gmail.com'
 EMAIL_HOST_PASSWORD = 'diyah02071982'
+
+ACCOUNT_ACTIVATION_DAYS = 2
+LOGIN_REDIRECT_URL = '/'

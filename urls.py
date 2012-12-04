@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -14,6 +15,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
 
+    # Registration
+    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^$', direct_to_template, {'template': 'home.html'}, 'home'),
 
     # API
     # url(r'^api/search/', include(SearchHotelResource().urls)),
