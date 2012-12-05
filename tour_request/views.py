@@ -3,13 +3,25 @@ from django.shortcuts import render_to_response, get_object_or_404
 from tour_request.models import Request
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
+from geographic_info.models import City
 import pprint
 
 
 pp = pprint.PrettyPrinter(indent=4)
 
 
-def editrequest(request, request_id):
+def newRequest(request):
+    tour_request = ''
+    cities = City.objects.all()
+    if request.POST:
+        print request.POST
+
+    return render_to_response('tour_request/new.html',
+            {'tour_request': tour_request, 'cities': cities},
+            context_instance=RequestContext(request))
+
+
+def editRequest(request, request_id):
     if request_id:
         tour_request = get_object_or_404(Request, pk=request_id)
 

@@ -111,35 +111,5 @@
     <!-- <script src="{{ STATIC_URL }}js/bootstrap-collapse.js"></script> -->
     <!-- <script src="{{ STATIC_URL }}js/bootstrap-carousel.js"></script> -->
 
-    <script type="text/javascript" charset="utf-8">
-      $("#id_region").empty();
-      function FilterModel() {
-        $("#id_region").empty();
-        $.getJSON('http://localhost:8080/api/city/'+ $("#id_city").val() +'/?format=json',
-            function(data){
-              var items = [];
-              $.each(data, function(key, val){
-                if (key==='regions'){
-                  for(var i=0; i < val.length; i++){
-                    $.ajax({
-                      url: 'http://localhost:8080'+ val[i] +
-                      '?format=json',
-                      async: false,
-                      dataType: 'json',
-                      success: function(subdata){
-                      items.push('<option value="' + subdata.id + '">' +
-                        subdata.region_name + '</option>');
-                      $("#id_region").append('<option value="' + subdata.id + '">' + subdata.region_name + '</option>');
-                      
-                      }
-                    });
-                  }
-                }
-              });
-            });
-        $("#id_region").prop('disabled', false);
-      }
-    </script>
-
   </body>
 </html>

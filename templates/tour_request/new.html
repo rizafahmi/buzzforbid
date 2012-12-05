@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<form action="" method="post" class="form-horizontal" accept-charset="utf-8">
+  {% csrf_token %}
+  <div class="control-group">
+    <label for="destinations"
+      class="control-label">Destinations</label>
+    <div class="controls">
+      <select id="city" name="city" multiple>
+        {% for city in cities  %}
+        <option value="{{ city.id }}">{{ city }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="date"
+      class="control-label">Date</label>
+    <div class="controls">
+      <input type="text" name="date" id="date" class="span2"
+      value="22-02-2012" data-date-format="dd-mm-yyyy" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="duration"
+      class="control-label">Duration in day(s)</label>
+    <div class="controls">
+      <input type="text" name="duration" id="duration"
+      value="{{tour_request.duration}}" class="span1"  />
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="adult"
+      class="control-label">Adult(s)</label>
+    <div class="controls">
+      <input type="text" name="adult" id="adult"
+      value="{{tour_request.adult}}" class="span1"  />
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="child"
+      class="control-label">Child</label>
+    <div class="controls">
+      <input type="text" name="child" id="child"
+      value="{{tour_request.child}}" class="span1"  />
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="airplane"
+      class="control-label">Airplane?</label>
+    <div class="controls">
+      {% if tour_request.airplane %}
+      <input type="checkbox" name="airplane" id="airplane"
+      checked="checked" />
+      {% else %}
+      <input type="checkbox" name="airplane" id="airplane" />
+      {% endif %}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="accomodation"
+      class="control-label">Accomodation?</label>
+    <div class="controls">
+      {% if tour_request.accomodation %}
+      <input type="checkbox" name="accomodation" id="accomodation"
+      checked="checked" />
+      {% else %}
+      <input type="checkbox" name="accomodation" id="accomodation" />
+      {% endif %}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="special_request"
+      class="control-label">Special Request</label>
+    <div class="controls">
+      <textarea name="special_request" id="special_request" rows="3"
+        cols="40">{{tour_request.special_request}}</textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="price"
+      class="control-label">Desired Price</label>
+    <div class="controls">
+      <input type="text" name="price" id="price"
+      value="{{tour_request.price}}" />
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls"><button class="btn
+        btn-primary" id="sendButton" name="sendButton"
+        value="send">Send Request</button>&nbsp;<button type="" class="btn
+        btn-danger" id="rejectButton" name="rejectButton"
+        value="reject">Reject</button></div>
+  </div>
+</form>
+{% endblock %}
