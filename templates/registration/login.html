@@ -1,1 +1,18 @@
-<h1>Login Form</h1>
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<form action="." method="post" accept-charset="utf-8">
+    {% csrf_token %}
+    {{form.as_p}}
+    <!-- <input type="submit" name="" id="" value="{% trans 'Log in' %}" /> -->
+    <button class="btn btn-primary" type="submit">{% trans "Log in" %}</button>
+    <input type="hidden" name="next" id="next" value="{{ next }}" />
+</form>
+<p>{% trans "Forgot password" %}? 
+    <a href="{% url auth_password_reset %}">{% trans "Reset it"%}</a>!
+</p>
+<p>
+  {% trans "Not member" %}?
+  <a href="{% url registration_register %}">{% trans "Register" %}</a>!
+</p>
+{% endblock %}
