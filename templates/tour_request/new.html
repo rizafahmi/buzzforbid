@@ -5,87 +5,111 @@
 
 <form action="" method="post" class="form-horizontal" accept-charset="utf-8">
   {% csrf_token %}
+  {{ form.errors }}
+  {% if form.destinations.errors %}
+  <div class="control-group error">
+  {% else %}
   <div class="control-group">
+  {% endif %}
     <label for="destinations"
       class="control-label">Destinations</label>
     <div class="controls">
-      <select id="city" name="city" multiple>
-        {% for city in cities  %}
-        <option value="{{ city.id }}">{{ city }}</option>
-        {% endfor %}
-      </select>
+        {{ form.destinations }}
+        {% if form.destinations.errors %}
+        <span class="help-inline">Please choose one or more city.</span>
+        {% endif %}
     </div>
   </div>
+  {% if form.date.errors %}
+  <div class="control-group error">
+  {% else %}
   <div class="control-group">
+  {% endif %}
     <label for="date"
       class="control-label">Date</label>
     <div class="controls">
-      <input type="text" name="date" id="date" class="span2"
-      value="22-02-2012" data-date-format="dd-mm-yyyy" />
+        {{ form.date }}
+        {% if form.date.errors %}
+        <span class="help-inline">Please choose date.</span>
+        {% endif %}
     </div>
   </div>
+  {% if form.duration.errors %}
+  <div class="control-group error">
+  {% else %}
   <div class="control-group">
+  {% endif %}
     <label for="duration"
       class="control-label">Duration in day(s)</label>
     <div class="controls">
-      <input type="text" name="duration" id="duration"
-      value="{{tour_request.duration}}" class="span1"  />
+        {{ form.duration }}
+        {% if form.duration.errors %}
+        <span class="help-inline">Please add duration.</span>
+        {% endif %}
     </div>
   </div>
+  {% if form.adult.errors %}
+  <div class="control-group error">
+  {% else %}
   <div class="control-group">
+  {% endif %}
     <label for="adult"
       class="control-label">Adult(s)</label>
     <div class="controls">
-      <input type="text" name="adult" id="adult"
-      value="{{tour_request.adult}}" class="span1"  />
+        {{ form.adult }}
+        {% if form.adult.errors %}
+        <span class="help-inline">Please add number of adult.</span>
+        {% endif %}
     </div>
   </div>
+  {% if form.child.errors %}
+  <div class="control-group error">
+  {% else %}
   <div class="control-group">
+  {% endif %}
     <label for="child"
       class="control-label">Child</label>
     <div class="controls">
-      <input type="text" name="child" id="child"
-      value="{{tour_request.child}}" class="span1"  />
+        {{ form.child }}
+        {% if form.child.errors %}
+        <span class="help-inline">Please add number of child, or just add 0 in
+        the textbox.</span>
+        {% endif %}
     </div>
   </div>
   <div class="control-group">
     <label for="airplane"
       class="control-label">Airplane?</label>
     <div class="controls">
-      {% if tour_request.airplane %}
-      <input type="checkbox" name="airplane" id="airplane"
-      checked="checked" />
-      {% else %}
-      <input type="checkbox" name="airplane" id="airplane" />
-      {% endif %}
+        {{ form.airplane }}
     </div>
   </div>
   <div class="control-group">
     <label for="accomodation"
       class="control-label">Accomodation?</label>
     <div class="controls">
-      {% if tour_request.accomodation %}
-      <input type="checkbox" name="accomodation" id="accomodation"
-      checked="checked" />
-      {% else %}
-      <input type="checkbox" name="accomodation" id="accomodation" />
-      {% endif %}
+        {{ form.accomodation }}
     </div>
   </div>
   <div class="control-group">
     <label for="special_request"
       class="control-label">Special Request</label>
     <div class="controls">
-      <textarea name="special_request" id="special_request" rows="3"
-        cols="40">{{tour_request.special_request}}</textarea>
+        {{ form.special_request }}
     </div>
   </div>
+  {% if form.price.errors %}
+  <div class="control-group error">
+  {% else %}
   <div class="control-group">
+  {% endif %}
     <label for="price"
       class="control-label">Desired Price</label>
     <div class="controls">
-      <input type="text" name="price" id="price"
-      value="{{tour_request.price}}" />
+        {{ form.price }}
+        {% if form.price.errors %}
+        <span class="help-inline">Please enter the desired price.</span>
+        {% endif %}
     </div>
   </div>
   <div class="control-group">
@@ -95,5 +119,53 @@
         btn-danger" id="rejectButton" name="rejectButton"
         value="reject">Reject</button></div>
   </div>
+  <input type="hidden" name="user" id="user" value="{{ user.id }}" />
+  <input type="hidden" name="status" id="status" value="unread" />
 </form>
+
+{% endblock %}
+
+{% block bottom_js %}
+<script>
+  $("#id_date").datepicker({'format': 'yyyy-mm-dd'});
+</script>
+{# <script src="{{ STATIC_URL }}js/jquery.validate.js"></script> #}
+{# <script type="text/javascript" charset="utf-8"> #}
+{#     jQuery(function(){ #}
+{#             jQuery("#city").validate({ #}
+{# expression: "if (VAL) return true; else return false;", #}
+{# message: "Please choose your desired city", #}
+{# error_class: "help-inline" #}
+{# }); #}
+{#             jQuery("#date").validate({ #}
+{# expression: "if (VAL) return true; else return false;", #}
+{# message: "Please select the date.", #}
+{# error_class: "help-inline" #}
+{#                 }); #}
+{#             }); #}
+{#             jQuery("#duration").validate({ #}
+{# expression: "if (VAL.match(/^[0-9]*$/) && VAL) return true; else return false;", #}
+{# message: "Please enter duration time in numbers.", #}
+{# error_class: "help-inline" #}
+{# }); #}
+{#             jQuery("#adult").validate({ #}
+{#  #}
+{# expression: "if (VAL.match(/^[0-9]*$/) && VAL) return true; else return false;", #}
+{# message: "Please fill the adult with number.", #}
+{# error_class: "help-inline" #}
+{#                 }); #}
+{#             jQuery("#child").validate({ #}
+{#  #}
+{# expression: "if (VAL.match(/^[0-9]*$/) && VAL) return true; else return false;", #}
+{# message: "Please fill the child with number.", #}
+{# error_class: "help-inline" #}
+{#                 }); #}
+{#             jQuery("#price").validate({ #}
+{#  #}
+{# expression: "if (VAL.match(/^[0-9]*$/) && VAL) return true; else return false;", #}
+{# message: "Please fill the price with number.", #}
+{# error_class: "help-inline" #}
+{#                 }); #}
+{# </script> #}
+
 {% endblock %}

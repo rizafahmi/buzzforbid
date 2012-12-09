@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 
     # Registration
     url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^$', direct_to_template, {'template': 'home.html'}, 'home'),
+    url(r'^$', direct_to_template, {'template': 'home.html'}, name='home'),
 
     # API
     # url(r'^api/search/', include(SearchHotelResource().urls)),

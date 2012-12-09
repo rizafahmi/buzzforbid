@@ -1,24 +1,31 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from tour_request.models import Request
 from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
-from geographic_info.models import City
 import pprint
+from tour_request.forms import NewRequestForm
 
 
 pp = pprint.PrettyPrinter(indent=4)
 
 
+@login_required
 def newRequest(request):
-    tour_request = ''
-    cities = City.objects.all()
     if request.POST:
-        print request.POST
+        form = NewRequestForm(request.POST)
+        print form
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    else:
+        form = NewRequestForm()
 
     return render_to_response('tour_request/new.html',
-            {'tour_request': tour_request, 'cities': cities},
-            context_instance=RequestContext(request))
+        {'form': form},
+        context_instance=RequestContext(request))
 
 
 def editRequest(request, request_id):

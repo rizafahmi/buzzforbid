@@ -68,9 +68,8 @@
           </div>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="{% url home %}">Home</a></li>
+              <li><a href="{% url new_request %}">Request</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -111,5 +110,18 @@
     <!-- <script src="{{ STATIC_URL }}js/bootstrap-collapse.js"></script> -->
     <!-- <script src="{{ STATIC_URL }}js/bootstrap-carousel.js"></script> -->
 
+    <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        jQuery(function(){
+                jQuery("#city").validate({
+expression: "if (VAL) return true; else return false;",
+message: "Please choose your desired city",
+error_class: "help-inline"
+                    });
+                });
+    </script>
+    {% block bottom_js %}
+    
+    {% endblock %}
   </body>
 </html>

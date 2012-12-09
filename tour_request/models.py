@@ -23,7 +23,7 @@ class Request(models.Model):
     special_request = models.TextField(blank=True, null=True)
     price = models.IntegerField(default=0)
     status = models.CharField(max_length=25, blank=True, null=True,
-            choices=STATUS_CHOICES)
+            choices=STATUS_CHOICES, default='unread')
     attachment = models.FileField(upload_to='uploads/', blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
 
