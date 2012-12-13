@@ -1,6 +1,7 @@
 from django.db import models
 
 from geographic_info.models import City
+from travel_agent.models import Agent
 from django.contrib.auth.models import User
 
 
@@ -44,6 +45,7 @@ class CounterRequest(models.Model):
     # Relation
     origin_request = models.ForeignKey(Request, related_name='counter_request_request')
 
+    agent = models.ForeignKey(Agent, related_name='counter_agent')
     destinations = models.ManyToManyField(City, related_name='counter_destination',
             blank=True, null=True)
     date = models.DateField()
