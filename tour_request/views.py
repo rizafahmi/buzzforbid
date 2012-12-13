@@ -5,7 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
 import pprint
-from tour_request.forms import NewRequestForm
+from tour_request.forms import NewRequestForm, CounterRequestForm
 
 
 pp = pprint.PrettyPrinter(indent=4)
@@ -70,3 +70,28 @@ def editRequest(request, request_id):
     return render_to_response('tour_request/index.html',
             {'tour_request': tour_request},
             context_instance=RequestContext(request))
+
+
+@login_required
+def CounterRequest(request):
+    if request.POST:
+        form = CounterRequestForm(request.POST)
+        print form
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    else:
+        form = CounterRequestForm()
+
+    return render_to_response('tour_request/counter.html',
+        {'form': form},
+        context_instance=RequestContext(request))
+
+
+@login_required
+def home(request):
+
+    return render_to_response('tour_request/home.html',
+        {'requests': Request.objects.filter(user=request.user)},
+        context_instance=RequestContext(request))

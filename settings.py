@@ -90,7 +90,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'debug_toolbar',
     'tastypie',
-    'south',
+    # 'south',
     'registration',
 
     # Our own models register

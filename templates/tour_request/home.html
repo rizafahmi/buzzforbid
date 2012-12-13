@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<table border="0" class="table-striped">
+  <tr>
+    <th>Destinations</th>
+    <th>Date</th>
+    <th>Duration</th>
+    <th>Adult</th>
+    <th>Child</th>
+    <th>Price</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  {% for req in requests %}
+    <tr>
+      <td>&nbsp;</td>
+      <td>{{ req.date }}</td>
+      <td>{{ req.duration }}</td>
+      <td>{{ req.adult }}</td>
+      <td>{{ req.child }}</td>
+      <td>{{ req.price }}</td>
+      <td>{{ req.status }}</td>
+      <td><a href="#">View</a></td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}extends
