@@ -6,16 +6,21 @@ from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
 import pprint
 from tour_request.forms import NewRequestForm, CounterRequestForm
-from tour_request.models import UserNotification
+from tour_request.models import UserNotification, CounterRequest as CounterRequestModel
 
 
 pp = pprint.PrettyPrinter(indent=4)
 
 
+def new_notification_count(user):
+    return UserNotification.objects.filter(user__username=user,
+            status='unread').count()
+
+
 @login_required
 def newRequest(request):
-    notification = UserNotification.objects.filter(user__username=request.user)
-    notification_count = UserNotification.objects.filter(user__username=request.user).count()
+    notification = UserNotification.objects.filter(user__username=request.user).order_by('id')
+
     if request.POST:
         form = NewRequestForm(request.POST)
         print form
@@ -29,7 +34,7 @@ def newRequest(request):
     return render_to_response('tour_request/new.html',
         {'form': form,
             'notification': notification,
-            'notification_count': notification_count,
+            'notification_count': new_notification_count(request.user),
             },
         context_instance=RequestContext(request))
 
@@ -96,13 +101,31 @@ def CounterRequest(request):
 
 
 @login_required
+def ViewCounterRequest(request, counter_id):
+    counter = CounterRequestModel.objects.filter(id=counter_id)
+    print counter
+    if request.POST:
+        form = CounterRequestForm(request.POST)
+        print form
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    else:
+        form = CounterRequestForm(counter)
+
+    return render_to_response('tour_request/counter.html',
+        {'form': form},
+        context_instance=RequestContext(request))
+
+
+@login_required
 def home(request):
 
-    notification = UserNotification.objects.filter(user__username=request.user)
-    notification_count = UserNotification.objects.filter(user__username=request.user).count()
+    notification = UserNotification.objects.filter(user__username=request.user).order_by('id')
     return render_to_response('tour_request/home.html',
         {'requests': Request.objects.filter(user=request.user),
             'notification': notification,
-            'notification_count': notification_count,
+            'notification_count': new_notification_count(request.user),
             },
         context_instance=RequestContext(request))
