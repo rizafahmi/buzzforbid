@@ -37,6 +37,7 @@ class Command(NoArgsCommand):
 
                     # print content
             notif = UserNotification.objects.filter(status='new')
+            print notif.count()
 
             if notif:
                 for n in notif:

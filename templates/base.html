@@ -48,10 +48,11 @@
             {% if user.is_authenticated %}
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="icon-user"></i> {{ user }}
+              <span class="badge badge-info">{{notification_count }}</span>
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#">Profile</a></li>
+              <li><a href="{% url home %}">Profile <span class="badge badge-info">{{notification_count }}</span></a></li>
               <li class="divider"></li>
               <li><a href="{% url auth_logout %}">Sign Out</a></li>
             </ul>

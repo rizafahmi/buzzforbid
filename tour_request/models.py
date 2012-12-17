@@ -90,4 +90,4 @@ class UserNotification(models.Model):
     subject = models.CharField(max_length=100, blank=False, null=False)
     message = models.TextField(blank=False, null=False)
     status = models.CharField(max_length=10, blank=False, null=False,
-            choices=STATUS_CHOICES, default='unread')
+            choices=STATUS_CHOICES, default='new')

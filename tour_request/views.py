@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
 import pprint
 from tour_request.forms import NewRequestForm, CounterRequestForm
+from tour_request.models import UserNotification
 
 
 pp = pprint.PrettyPrinter(indent=4)
@@ -13,6 +14,8 @@ pp = pprint.PrettyPrinter(indent=4)
 
 @login_required
 def newRequest(request):
+    notification = UserNotification.objects.filter(user__username=request.user)
+    notification_count = UserNotification.objects.filter(user__username=request.user).count()
     if request.POST:
         form = NewRequestForm(request.POST)
         print form
@@ -24,7 +27,10 @@ def newRequest(request):
         form = NewRequestForm()
 
     return render_to_response('tour_request/new.html',
-        {'form': form},
+        {'form': form,
+            'notification': notification,
+            'notification_count': notification_count,
+            },
         context_instance=RequestContext(request))
 
 
@@ -92,6 +98,11 @@ def CounterRequest(request):
 @login_required
 def home(request):
 
+    notification = UserNotification.objects.filter(user__username=request.user)
+    notification_count = UserNotification.objects.filter(user__username=request.user).count()
     return render_to_response('tour_request/home.html',
-        {'requests': Request.objects.filter(user=request.user)},
+        {'requests': Request.objects.filter(user=request.user),
+            'notification': notification,
+            'notification_count': notification_count,
+            },
         context_instance=RequestContext(request))

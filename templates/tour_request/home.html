@@ -1,8 +1,31 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load check_counter %}
 
 {% block content %}
-<table border="0" class="table-striped">
+{% if notification %}
+<h3>Your Notification</h3>
+<table border="0" class="table table-striped">
+  <tr>
+    <th>Subject</th>
+    <th>Message</th>
+  </tr>
+  {% for notif in notification %}
+  <tr>
+    <td>
+      {% if notif.status != 'read' %}
+      <span class="badge badge-info">{{ notif.status|title }}</span> 
+      {% endif %}
+      {{ notif.subject }}
+    </td>
+    <td>{{ notif.message }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% if requests %}
+<h3>Your Request</h3>
+<table border="0" class="table table-striped">
   <tr>
     <th>Destinations</th>
     <th>Date</th>
@@ -16,7 +39,11 @@
   </tr>
   {% for req in requests %}
     <tr>
-      <td>&nbsp;</td>
+      <td>
+        {% for dest in req.destinations.all %}
+          {{dest}}, 
+        {% endfor %}
+      </td>
       <td>{{ req.date }}</td>
       <td>{{ req.duration }}</td>
       <td>{{ req.adult }}</td>
@@ -24,8 +51,10 @@
       <td>{{ req.price }}</td>
       <td>{{ req.status }}</td>
       <td><a href="#">View</a></td>
-      <td>...</td>
+      <td><span class="badge badge-success">{{ req.id|count_counter}} <a
+            href="#">View Counters</a></span></td>
     </tr>
   {% endfor %}
 </table>
+{% endif %}
 {% endblock %}extends
