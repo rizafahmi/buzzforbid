@@ -50,9 +50,9 @@
       <td>{{ req.child }}</td>
       <td>{{ req.price }}</td>
       <td>{{ req.status }}</td>
-      <td><a href="#">View</a></td>
+      <td><a href="{% url view_request req.id %}">View</a></td>
       <td><span class="badge badge-success">{{ req.id|count_counter}}</span> <a
-            href="#">View Counters</a></td>
+            href="{% url counter_list %}">View Counters</a></td>
     </tr>
   {% endfor %}
 </table>

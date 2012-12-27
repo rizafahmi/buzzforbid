@@ -84,6 +84,16 @@ def editRequest(request, request_id):
 
 
 @login_required
+def ViewRequest(request, request_id):
+    if request_id:
+        tour_request = get_object_or_404(Request, pk=request_id)
+
+    return render_to_response('tour_request/view_request.html',
+            {'form': tour_request},
+            context_instance=RequestContext(request))
+
+
+@login_required
 def CounterRequest(request):
     if request.POST:
         form = CounterRequestForm(request.POST)
@@ -105,7 +115,7 @@ def ViewCounterRequest(request, counter_id):
     if counter_id:
         counter = get_object_or_404(CounterRequestModel, pk=counter_id)
 
-    return render_to_response('tour_request/counter.html',
+    return render_to_response('tour_request/view_counter.html',
             {'form': counter},
         context_instance=RequestContext(request))
 

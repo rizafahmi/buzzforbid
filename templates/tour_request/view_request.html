@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<form action="" method="post" class="form-horizontal" accept-charset="utf-8">
+  {% csrf_token %}
+  {{ form.errors }}
+  <div class="control-group">
+    <label for="destinations"
+      class="control-label">Destinations</label>
+    <div class="controls">
+      {% for dest in form.destination.all %}
+      {{ dest }}, 
+      {% endfor %}
+    </div>
+  </div>
+  {% if form.date.errors %}
+  <div class="control-group error">
+  {% else %}
+  <div class="control-group">
+  {% endif %}
+    <label for="date"
+      class="control-label">Date</label>
+    <div class="controls">
+        {{ form.date }}
+        {% if form.date.errors %}
+        <span class="help-inline">Please choose date.</span>
+        {% endif %}
+    </div>
+  </div>
+  {% if form.duration.errors %}
+  <div class="control-group error">
+  {% else %}
+  <div class="control-group">
+  {% endif %}
+    <label for="duration"
+      class="control-label">Duration in day(s)</label>
+    <div class="controls">
+        {{ form.duration }}
+        {% if form.duration.errors %}
+        <span class="help-inline">Please add duration.</span>
+        {% endif %}
+    </div>
+  </div>
+  {% if form.adult.errors %}
+  <div class="control-group error">
+  {% else %}
+  <div class="control-group">
+  {% endif %}
+    <label for="adult"
+      class="control-label">Adult(s)</label>
+    <div class="controls">
+        {{ form.adult }}
+        {% if form.adult.errors %}
+        <span class="help-inline">Please add number of adult.</span>
+        {% endif %}
+    </div>
+  </div>
+  {% if form.child.errors %}
+  <div class="control-group error">
+  {% else %}
+  <div class="control-group">
+  {% endif %}
+    <label for="child"
+      class="control-label">Child</label>
+    <div class="controls">
+        {{ form.child }}
+        {% if form.child.errors %}
+        <span class="help-inline">Please add number of child, or just add 0 in
+        the textbox.</span>
+        {% endif %}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="airplane"
+      class="control-label">Airplane?</label>
+    <div class="controls">
+        {{ form.airplane }}
+    </div>
+  </div>
+  {% if form.airplane_type.errors %}
+  <div class="control-group error">
+  {% else %}
+  <div class="control-group">
+  {% endif %}
+    <label for="airplane_type"
+      class="control-label">Airplane Type</label>
+    <div class="controls">
+        {{ form.airplane_type }}
+        {% if form.airplane_type.errors %}
+        <span class="help-inline">Please enter the airplane type.</span>
+        {% endif %}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="accomodation"
+      class="control-label">Accomodation?</label>
+    <div class="controls">
+        {{ form.accomodation }}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="accomodation_desc"
+      class="control-label">Accomodation Desc.</label>
+    <div class="controls">
+        {{ form.accomodation_desc }}
+    </div>
+  </div>
+  {% if form.price.errors %}
+  <div class="control-group error">
+  {% else %}
+  <div class="control-group">
+  {% endif %}
+    <label for="price"
+      class="control-label">Desired Price</label>
+    <div class="controls">
+        {{ form.price }}
+        {% if form.price.errors %}
+        <span class="help-inline">Please enter the desired price.</span>
+        {% endif %}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="tour_detail"
+      class="control-label">Tour Detail</label>
+    <div class="controls">
+        {{ form.tour_detail }}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="attachment"
+      class="control-label">Attachment</label>
+    <div class="controls">
+        {{ form.attachment }}
+    </div>
+  </div>
+  {% if form.departure.errors %}
+  <div class="control-group error">
+  {% else %}
+  <div class="control-group">
+  {% endif %}
+    <label for="departure"
+      class="control-label">Departure</label>
+    <div class="controls">
+        {{ form.departure }}
+        {% if form.departure.errors %}
+        <span class="help-inline">Please choose your desired departure
+          time.</span>
+        {% endif %}
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="terms_conditions"
+      class="control-label">Terms and Conditions</label>
+    <div class="controls">
+        {{ form.terms_conditions }}
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls"><a href="{% url home %}" type="" class="btn
+        btn-danger" id="backButton" name="backButton"
+        value="reject">Back</a></div>
+  </div>
+  <input type="hidden" name="user" id="user" value="{{ user.id }}" />
+  <input type="hidden" name="status" id="status" value="unread" />
+</form>
+
+{% endblock %}
+
+{% block bottom_js %}
+<script>
+  $("#id_date").datepicker({'format': 'yyyy-mm-dd'});
+</script>
+{% endblock %}
