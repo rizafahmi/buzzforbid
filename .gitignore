@@ -9,3 +9,7 @@ eggs
 parts
 src/*.egg-info
 *.un~
+*.log
+*.pot
+*.pyc
+local_settings.py
