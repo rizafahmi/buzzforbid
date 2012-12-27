@@ -102,20 +102,20 @@ def CounterRequest(request):
 
 @login_required
 def ViewCounterRequest(request, counter_id):
-    counter = CounterRequestModel.objects.filter(id=counter_id)
-    print counter
-    if request.POST:
-        form = CounterRequestForm(request.POST)
-        print form
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-
-    else:
-        form = CounterRequestForm(counter)
+    if counter_id:
+        counter = get_object_or_404(CounterRequestModel, pk=counter_id)
 
     return render_to_response('tour_request/counter.html',
-        {'form': form},
+            {'form': counter},
+        context_instance=RequestContext(request))
+
+
+@login_required
+def CounterList(request):
+    counters = CounterRequestModel.objects.filter(user=request.user)
+    return render_to_response('tour_request/counter_list.html',
+            {'counters': counters,
+            'notification_count': new_notification_count(request.user)},
         context_instance=RequestContext(request))
 
 
