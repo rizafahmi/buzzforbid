@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load check_counter %}
+
+{% block content %}
+<h3>Your Counter Offer</h3>
+<table border="0" class="table table-striped">
+  <tr>
+    <th>Destinations</th>
+    <th>Date</th>
+    <th>Durations</th>
+    <th>Price</th>
+    <th>Action</th>
+  </tr>
+  {% for counter in counters %}
+  <tr>
+    <td>
+      {% for dest in counter.destinations.all %}
+      {{ dest }},
+      {% endfor %}
+    </td>
+    <td>
+      {{ counter.date }} 
+    </td>
+    <td>
+      {{ counter.duration }}
+    </td>
+    <td>{{ counter.price }}</td>
+    <td><a href="{{ url counter_list }}">View</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}extends
